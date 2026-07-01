@@ -1,8 +1,5 @@
 -- ============================================================
--- LinkSimple - Esquema de Supabase
--- ============================================================
--- Crea las tablas necesarias y configura Row Level Security.
--- Ejecuta esto en el SQL Editor de tu proyecto Supabase.
+-- Linky - Esquema de Supabase
 -- ============================================================
 
 -- 1. Tabla de perfiles
@@ -13,7 +10,8 @@ CREATE TABLE IF NOT EXISTS profiles (
   bio TEXT DEFAULT '',
   avatar_url TEXT DEFAULT '',
   subscribed BOOLEAN DEFAULT false,
-  stripe_customer_id TEXT DEFAULT '',
+  provider TEXT DEFAULT '',
+  provider_subscription_id TEXT DEFAULT '',
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now()
 );

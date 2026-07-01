@@ -62,11 +62,12 @@ export default function SettingsPage() {
     setSaving(false)
   }
 
-  async function handleCheckout() {
+  async function handleCheckout(provider) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
-    const res = await fetch('/api/stripe/checkout', { method: 'POST' })
+    const endpoint = provider === 'paypal' ? '/api/paypal/create-subscription' : '/api/mercadopago/create-preapproval'
+    const res = await fetch(endpoint, { method: 'POST' })
     const data = await res.json()
     if (data.url) window.location.href = data.url
     else setError('Error processing payment')
@@ -132,9 +133,17 @@ export default function SettingsPage() {
           {subscribed ? (
             <p className="text-green-600 text-sm flex items-center gap-1"><Check size={16} /> {l.settings.subActive}</p>
           ) : (
-            <button onClick={handleCheckout} className="px-6 py-2 bg-violet-600 text-white rounded-xl hover:bg-violet-700 text-sm font-medium">
-              {l.settings.subscribe}
-            </button>
+            <div className="space-y-3">
+              <button onClick={() => handleCheckout('paypal')} className="w-full px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 text-sm font-medium flex items-center justify-center gap-2">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.557 0 4.963.975 6.565 2.712 1.62 1.76 2.248 4.108 1.81 6.59-.585 3.317-3.206 6.174-8.074 6.174h-2.252a.639.639 0 0 0-.632.526l-.717 4.543-.051.307a.641.641 0 0 1-.633.525H7.076z"/></svg>
+                {l.settings.subscribePayPal}
+              </button>
+              <p className="text-center text-xs text-gray-400">{l.settings.noCard}</p>
+              <button onClick={() => handleCheckout('mercadopago')} className="w-full px-6 py-2.5 bg-teal-600 text-white rounded-xl hover:bg-teal-700 text-sm font-medium flex items-center justify-center gap-2">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm1-13h-2v6l5.25 3.15L17 13.5l-4-2.4V7z"/></svg>
+                {l.settings.subscribeMP}
+              </button>
+            </div>
           )}
         </div>
       </div>
