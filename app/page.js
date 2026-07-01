@@ -59,7 +59,7 @@ export default function LandingPage() {
         <h2 className="text-3xl font-bold text-gray-900 mb-4">{l.pricing.title}</h2>
         <p className="text-gray-600 mb-8">{l.pricing.desc}</p>
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-sm mx-auto">
-          <p className="text-5xl font-bold text-violet-600">$5</p>
+          <p className="text-5xl font-bold text-violet-600">{l.pricing.priceLabel}</p>
           <p className="text-gray-500 mt-2">{l.pricing.month}</p>
           <ul className="mt-6 text-left space-y-3">
             {l.pricing.features.map(f => (
