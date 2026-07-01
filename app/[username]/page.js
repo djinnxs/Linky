@@ -1,6 +1,6 @@
 import { createServerSupabase } from '@/lib/supabase-server'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import LinkyLogo from '@/components/LinkyLogo'
 
 export default async function BioPage({ params }) {
   const supabase = await createServerSupabase()
@@ -39,10 +39,12 @@ export default async function BioPage({ params }) {
         </div>
 
         {links.length === 0 && (
-          <p className="text-gray-400 mt-8">No hay links aún</p>
+          <p className="text-gray-400 mt-8">No links yet</p>
         )}
 
-        <p className="mt-12 text-xs text-gray-400">Creado con Linky</p>
+        <div className="mt-12 flex items-center justify-center gap-1 text-xs text-gray-400">
+          Created with <LinkyLogo className="w-3 h-3" /> Linky
+        </div>
       </div>
     </div>
   )
