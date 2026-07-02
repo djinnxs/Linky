@@ -1,12 +1,20 @@
 import { NextResponse } from 'next/server'
 import { createServerSupabase } from '@/lib/supabase-server'
 import { getPayPalAccessToken, createPayPalSubscription } from '@/lib/paypal'
+import { rateLimit } from '@/lib/rate-limit'
 
-export async function POST() {
+const limiter = rateLimit({ interval: 60000, max: 5 })
+
+export async function POST(request) {
+  const ip = request.headers.get('x-forwarded-for') || 'unknown'
+  if (!limiter.check(`pp-create:${ip}`)) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
+
   try {
     const supabase = await createServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+    if (!user) return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
 
     const token = await getPayPalAccessToken()
     const subscription = await createPayPalSubscription(token, user.id, user.email)
@@ -22,7 +30,7 @@ export async function POST() {
 
     const approveLink = subscription.links?.find(l => l.rel === 'approve')
     return NextResponse.json({ url: approveLink?.href || null })
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: 'Error creating subscription' }, { status: 500 })
   }
 }
