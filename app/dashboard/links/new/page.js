@@ -104,6 +104,12 @@ export default function NewLinkPage() {
               className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
           </div>
           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{l.newLink.urlLabel}</label>
+            <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} required
+              placeholder={l.newLink.urlPlaceholder}
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
+          </div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">{l.newLink.icon}</label>
             <div className="relative">
               <button type="button" onClick={() => setShowIcons(!showIcons)}
@@ -126,12 +132,6 @@ export default function NewLinkPage() {
                 </div>
               )}
             </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">{l.newLink.urlLabel}</label>
-            <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} required
-              placeholder={l.newLink.urlPlaceholder}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
           </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
