@@ -123,6 +123,30 @@ export default function SettingsPage() {
 
           <hr className="border-gray-100" />
           <h3 className="font-semibold text-gray-900">{l.settings.colors}</h3>
+
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-2">{l.settings.themes}</label>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { id: 'light', bg: '#f5f5f5', lbg: '#ffffff', lc: '#7c3aed' },
+                { id: 'dark', bg: '#1a1a2e', lbg: '#16213e', lc: '#e94560' },
+                { id: 'violet', bg: '#f5f3ff', lbg: '#ffffff', lc: '#7c3aed' },
+                { id: 'ocean', bg: '#ecfeff', lbg: '#ffffff', lc: '#0891b2' },
+                { id: 'forest', bg: '#f0fdf4', lbg: '#ffffff', lc: '#16a34a' },
+                { id: 'sunset', bg: '#fff7ed', lbg: '#ffffff', lc: '#ea580c' },
+                { id: 'midnight', bg: '#0f172a', lbg: '#1e293b', lc: '#38bdf8' },
+                { id: 'rose', bg: '#fff1f2', lbg: '#ffffff', lc: '#e11d48' },
+              ].map(theme => (
+                <button key={theme.id} type="button" onClick={() => setProfile(p => ({ ...p, bg_color: theme.bg, link_bg: theme.lbg, link_color: theme.lc }))}
+                  className="flex flex-col items-center gap-1 p-2 rounded-xl border border-gray-200 hover:border-violet-400 transition-colors">
+                  <div className="w-full h-8 rounded-lg flex items-center justify-center gap-1" style={{ backgroundColor: theme.bg }}>
+                    <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: theme.lbg, border: `1px solid ${theme.lc}` }} />
+                  </div>
+                  <span className="text-[10px] capitalize text-gray-600">{theme.id}</span>
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="flex gap-4">
             <div className="flex-1">
               <label className="block text-xs font-medium text-gray-600 mb-1">{l.settings.bgColor}</label>

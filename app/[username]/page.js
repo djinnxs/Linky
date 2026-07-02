@@ -1,6 +1,7 @@
 import { createServerSupabase } from '@/lib/supabase-server'
 import { notFound } from 'next/navigation'
 import LinkyLogo from '@/components/LinkyLogo'
+import SocialIcon from '@/components/SocialIcons'
 
 export default async function BioPage({ params }) {
   const supabase = await createServerSupabase()
@@ -36,8 +37,9 @@ export default async function BioPage({ params }) {
         <div className="space-y-3">
           {links.map(link => (
             <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer"
-              className="block w-full py-3 px-6 rounded-xl font-medium shadow-sm transition-transform hover:scale-[1.02]"
+              className="block w-full py-3 px-6 rounded-xl font-medium shadow-sm transition-transform hover:scale-[1.02] flex items-center justify-center gap-3"
               style={{ backgroundColor: linkBg, color: linkColor, border: `1px solid ${linkColor}20` }}>
+              <SocialIcon name={link.icon} className="w-5 h-5 shrink-0" />
               {link.title}
             </a>
           ))}

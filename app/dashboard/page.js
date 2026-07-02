@@ -8,6 +8,7 @@ import LinkyLogo from '@/components/LinkyLogo'
 import Link from 'next/link'
 import t from '@/lib/translations'
 import { Plus, LogOut, Link as LinkIcon, ExternalLink, Trash2, GripVertical } from 'lucide-react'
+import SocialIcon from '@/components/SocialIcons'
 
 export default function DashboardPage() {
   const { lang, toggleLang } = useLang()
@@ -99,6 +100,7 @@ export default function DashboardPage() {
             {links.map(link => (
               <div key={link.id} className="bg-white p-4 rounded-xl border border-gray-100 flex items-center gap-4">
                 <GripVertical size={20} className="text-gray-300 cursor-grab" />
+                <SocialIcon name={link.icon} className="w-5 h-5 shrink-0 text-gray-500" />
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-gray-900 truncate">{link.title}</p>
                   <p className="text-sm text-gray-500 truncate">{link.url}</p>
