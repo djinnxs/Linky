@@ -12,7 +12,7 @@ import { ArrowLeft, Check } from 'lucide-react'
 export default function SettingsPage() {
   const { lang, toggleLang } = useLang()
   const l = t[lang]
-  const [profile, setProfile] = useState({ username: '', display_name: '', bio: '', avatar_url: '' })
+  const [profile, setProfile] = useState({ username: '', display_name: '', bio: '', avatar_url: '', bg_color: '#f5f5f5', link_color: '#7c3aed', link_bg: '#ffffff' })
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
@@ -33,6 +33,9 @@ export default function SettingsPage() {
         display_name: data.display_name || '',
         bio: data.bio || '',
         avatar_url: data.avatar_url || '',
+        bg_color: data.bg_color || '#f5f5f5',
+        link_color: data.link_color || '#7c3aed',
+        link_bg: data.link_bg || '#ffffff',
       })
       setSubscribed(data.subscribed || false)
     }
@@ -116,6 +119,32 @@ export default function SettingsPage() {
             <input type="url" value={profile.avatar_url} onChange={e => setProfile({ ...profile, avatar_url: e.target.value })}
               placeholder="https://example.com/my-photo.jpg"
               className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
+          </div>
+
+          <hr className="border-gray-100" />
+          <h3 className="font-semibold text-gray-900">{l.settings.colors}</h3>
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <label className="block text-xs font-medium text-gray-600 mb-1">{l.settings.bgColor}</label>
+              <div className="flex items-center gap-2">
+                <input type="color" value={profile.bg_color} onChange={e => setProfile({ ...profile, bg_color: e.target.value })} className="w-10 h-10 rounded-lg cursor-pointer border-0 p-0.5" />
+                <input type="text" value={profile.bg_color} onChange={e => setProfile({ ...profile, bg_color: e.target.value })} className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 font-mono" />
+              </div>
+            </div>
+            <div className="flex-1">
+              <label className="block text-xs font-medium text-gray-600 mb-1">{l.settings.linkBg}</label>
+              <div className="flex items-center gap-2">
+                <input type="color" value={profile.link_bg} onChange={e => setProfile({ ...profile, link_bg: e.target.value })} className="w-10 h-10 rounded-lg cursor-pointer border-0 p-0.5" />
+                <input type="text" value={profile.link_bg} onChange={e => setProfile({ ...profile, link_bg: e.target.value })} className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 font-mono" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">{l.settings.linkColor}</label>
+            <div className="flex items-center gap-2">
+              <input type="color" value={profile.link_color} onChange={e => setProfile({ ...profile, link_color: e.target.value })} className="w-10 h-10 rounded-lg cursor-pointer border-0 p-0.5" />
+              <input type="text" value={profile.link_color} onChange={e => setProfile({ ...profile, link_color: e.target.value })} className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 font-mono" />
+            </div>
           </div>
 
           {message && <p className="text-green-600 text-sm flex items-center gap-1"><Check size={16} /> {message}</p>}

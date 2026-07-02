@@ -20,19 +20,24 @@ export default async function BioPage({ params }) {
     .eq('user_id', profile.id)
     .order('position')
 
+  const bgColor = profile.bg_color || '#f5f5f5'
+  const linkColor = profile.link_color || '#7c3aed'
+  const linkBg = profile.link_bg || '#ffffff'
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-start justify-center px-4 pt-16">
+    <div className="min-h-screen flex items-start justify-center px-4 pt-16" style={{ backgroundColor: bgColor }}>
       <div className="w-full max-w-md text-center">
         {profile.avatar_url && (
-          <img src={profile.avatar_url} alt="" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-gray-200" />
+          <img src={profile.avatar_url} alt="" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2" style={{ borderColor: linkColor }} />
         )}
-        <h1 className="text-xl font-bold text-gray-900 mb-1">{profile.display_name || username}</h1>
-        {profile.bio && <p className="text-gray-600 mb-6">{profile.bio}</p>}
+        <h1 className="text-xl font-bold mb-1" style={{ color: '#1a1a1a' }}>{profile.display_name || username}</h1>
+        {profile.bio && <p className="mb-6" style={{ color: '#4a4a4a' }}>{profile.bio}</p>}
 
         <div className="space-y-3">
           {links.map(link => (
             <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer"
-              className="block w-full py-3 px-6 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-violet-300 transition-colors text-gray-800 font-medium shadow-sm">
+              className="block w-full py-3 px-6 rounded-xl font-medium shadow-sm transition-transform hover:scale-[1.02]"
+              style={{ backgroundColor: linkBg, color: linkColor, border: `1px solid ${linkColor}20` }}>
               {link.title}
             </a>
           ))}
